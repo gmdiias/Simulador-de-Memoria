@@ -76,11 +76,14 @@ public class Main {
 	}
 	
 	public void algoritmoNRU(int posicao) {
-		for(Pagina pagina : listPaginas) {
+		for(int i = 0; i < 5; i++) {
+			Pagina pagina = listPaginas.get(i);
 			if(pagina.getNumPag() == -1) {
 				pagina.setNumPag(posicao);
 				pagina.setR(true);
 				pagina.setW(false);
+				frame.replace(posicao, i);
+				return;
 			}
 		}
 	}
