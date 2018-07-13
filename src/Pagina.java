@@ -29,5 +29,8 @@ public class Pagina {
 	public void setUtilizado(int utilizado) {
 		this.utilizado = utilizado;
 	}
+	public String toString() {
+		return "N:" + this.numPag + " R:" + this.r + " W:" + this.w;
+	}
 	
 }
