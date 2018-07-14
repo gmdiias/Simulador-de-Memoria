@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AlgoritmoNRU {
+public class AlgoritmoFIFO {
 	HashMap<Integer, Integer> frame = new HashMap<>();
 	List<Pagina> listPaginas = new ArrayList<>();
 	
@@ -14,15 +14,15 @@ public class AlgoritmoNRU {
 	private int numFrames = 0;
 	private int clockTick = 0;
 	
-	public AlgoritmoNRU() {
+	public AlgoritmoFIFO() {
 		
 	}
 	
-	public AlgoritmoNRU(int numFrames) {
+	public AlgoritmoFIFO(int numFrames) {
 		this.numFrames = numFrames;
 	}
 	
-	public void gerenciadorNRU() {
+	public void gerenciadorFIFO() {
 		inicializaList();
 		lerArquivo();
 		System.out.println(contPF);
@@ -70,10 +70,8 @@ public class AlgoritmoNRU {
 			// Caso não exista no HASH é criado
 		}
 		
-		clockTick++;
-		verificaClock();
 		if(frame.get(posicao) == -1) {
-			pageFaultNRU(posicao, tipo);
+			pageFaultFIFO(posicao, tipo);
 			contPF++;
 		}
 		else {
@@ -81,7 +79,7 @@ public class AlgoritmoNRU {
 		}
 	}
 	
-	public void pageFaultNRU(int posicao, String tipo) {
+	public void pageFaultFIFO(int posicao, String tipo) {
 		for(int i = 0; i < numFrames; i++) {
 			Pagina pagina = listPaginas.get(i);
 			if(pagina.getNumPag() == -1) {
@@ -95,52 +93,18 @@ public class AlgoritmoNRU {
 			}
 		}
 		
-		int altera = verificaClasses();
+		frame.replace(listPaginas.get(0).getNumPag(), -1);
+		listPaginas.remove(0);
 		
-		Pagina pagina = listPaginas.get(altera);
-		frame.replace(pagina.getNumPag(), -1);
+		Pagina pagina = new Pagina();
 		pagina.setNumPag(posicao);
 		pagina.setR(true);
 		pagina.setW(false);
 		if(tipo.equals("w")) {
 			pagina.setW(true);
 		}
-		frame.replace(posicao, altera);
-	}
-	
-	public int verificaClasses() {
-		for(int i = 0; i < numFrames; i++) {
-			Pagina pagina = listPaginas.get(i);
-			if(!pagina.isR() && !pagina.isW()) {
-				System.out.println("Tipo 0 encontrado");
-				return i;
-			}
-		}
-		
-		for(int i = 0; i < numFrames; i++) {
-			Pagina pagina = listPaginas.get(i);
-			if(!pagina.isR() && pagina.isW()) {
-				System.out.println("Tipo 1 encontrado");
-				return i;
-			}
-		}
-		
-		for(int i = 0; i < numFrames; i++) {
-			Pagina pagina = listPaginas.get(i);
-			if(pagina.isR() && !pagina.isW()) {
-				System.out.println("Tipo 2 encontrado");
-				return i;
-			}
-		}
-		
-		for(int i = 0; i < numFrames; i++) {
-			Pagina pagina = listPaginas.get(i);
-			if(pagina.isR() && pagina.isW()) {
-				System.out.println("Tipo 3 encontrado");
-				return i;
-			}
-		}
-		return 1;
+		frame.replace(posicao, listPaginas.size());
+		listPaginas.add(pagina);
 	}
 	
 	public void refreshPage(int posicao, String tipo) {
@@ -150,14 +114,4 @@ public class AlgoritmoNRU {
 			listPaginas.get(id).setW(true);
 		}
 	}	
-	
-	public void verificaClock() {
-		if(clockTick > (numFrames*2)) {
-			for(int i = 0; i < numFrames; i++) {
-				listPaginas.get(i).setR(false);
-			}
-			clockTick = 0;
-			System.out.println("Limpei");
-		}
-	}
 }

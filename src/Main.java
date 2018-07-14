@@ -16,6 +16,11 @@ public class Main {
 			nru.gerenciadorNRU();
 		}
 		
+		else if(escolha == 2) {
+			AlgoritmoFIFO fifo = new AlgoritmoFIFO(numFrames);
+			fifo.gerenciadorFIFO();
+		}
+		
 	}
 	
 }
