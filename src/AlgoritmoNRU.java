@@ -9,6 +9,8 @@ public class AlgoritmoNRU {
 	HashMap<Integer, Integer> frame = new HashMap<>();
 	List<Pagina> listPaginas = new ArrayList<>();
 	
+	private String caminhoArquivo;
+	private int tamPagina = 0;
 	private int contPF = 0;
 	private int modificado = 0;
 	private int numFrames = 0;
@@ -18,8 +20,10 @@ public class AlgoritmoNRU {
 		
 	}
 	
-	public AlgoritmoNRU(int numFrames) {
+	public AlgoritmoNRU(String caminhoArquivo, int numFrames, int tamPagina) {
 		this.numFrames = numFrames;
+		this.caminhoArquivo = caminhoArquivo;
+		this.tamPagina = tamPagina;
 	}
 	
 	public void gerenciadorNRU() {
@@ -31,7 +35,7 @@ public class AlgoritmoNRU {
 	public void lerArquivo() {
 		BufferedReader br;
 		try {
-			FileReader ler = new FileReader("./entrada4.txt");
+			FileReader ler = new FileReader(caminhoArquivo);
 			BufferedReader reader = new BufferedReader(ler);
 			String linha;
 			
@@ -42,9 +46,9 @@ public class AlgoritmoNRU {
 			while (!(linha = reader.readLine()).equals("#eof")) {
 				linha = linha.replace(":", "");
 				String[] texto = linha.split(" ");
-				instrucao = Integer.parseInt(texto[0].substring(2, 9), 16)/1024;
+				instrucao = Integer.parseInt(texto[0].substring(2, 9), 16)/tamPagina;
 				tipo = texto[1].toLowerCase();
-				dado = Integer.parseInt(texto[2].substring(2, 9), 16)/1024;
+				dado = Integer.parseInt(texto[2].substring(2, 9), 16)/tamPagina;
 				
 				verificaHash(instrucao, "r");
 				verificaHash(dado, tipo);
