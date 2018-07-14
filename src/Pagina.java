@@ -30,7 +30,7 @@ public class Pagina {
 		this.utilizado = utilizado;
 	}
 	public String toString() {
-		return "N:" + this.numPag + " R:" + this.r + " W:" + this.w;
+		return "N:" + this.numPag + " R:" + this.r + " W:" + this.w + " |";
 	}
 	
 }
