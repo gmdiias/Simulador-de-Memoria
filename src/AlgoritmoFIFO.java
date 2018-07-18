@@ -28,7 +28,8 @@ public class AlgoritmoFIFO {
 	public void gerenciadorFIFO() {
 		inicializaList();
 		lerArquivo();
-		System.out.println(contPF);
+		System.out.println("Numero de Page Faults: " + contPF);
+		System.out.println("Numero de writes: " + modificado);
 	}
 	
 	public void lerArquivo() {
@@ -51,7 +52,7 @@ public class AlgoritmoFIFO {
 				
 				verificaHash(instrucao, "r");
 				verificaHash(dado, tipo);
-				System.out.println(instrucao + " " + tipo + " " + dado);
+				//System.out.println(instrucao + " " + tipo + " " + dado);
 			}
 
 		} catch (IOException e) {
@@ -97,6 +98,9 @@ public class AlgoritmoFIFO {
 		}
 		
 		frame.replace(listPaginas.get(0).getNumPag(), -1);
+		if(listPaginas.get(0).isW()) {
+			modificado++;
+		}
 		listPaginas.remove(0);
 		
 		Pagina pagina = new Pagina();

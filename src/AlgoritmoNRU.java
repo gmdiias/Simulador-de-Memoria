@@ -29,7 +29,8 @@ public class AlgoritmoNRU {
 	public void gerenciadorNRU() {
 		inicializaList();
 		lerArquivo();
-		System.out.println(contPF);
+		System.out.println("Numero de Page Faults: " + contPF);
+		System.out.println("Numero de writes: " +modificado);
 	}
 	
 	public void lerArquivo() {
@@ -52,7 +53,7 @@ public class AlgoritmoNRU {
 				
 				verificaHash(instrucao, "r");
 				verificaHash(dado, tipo);
-				System.out.println(instrucao + " " + tipo + " " + dado);
+				//System.out.println(instrucao + " " + tipo + " " + dado);
 			}
 
 		} catch (IOException e) {
@@ -103,6 +104,9 @@ public class AlgoritmoNRU {
 		
 		Pagina pagina = listPaginas.get(altera);
 		frame.replace(pagina.getNumPag(), -1);
+		if(pagina.isW()) {
+			modificado++;
+		}
 		pagina.setNumPag(posicao);
 		pagina.setR(true);
 		pagina.setW(false);
@@ -116,7 +120,6 @@ public class AlgoritmoNRU {
 		for(int i = 0; i < numFrames; i++) {
 			Pagina pagina = listPaginas.get(i);
 			if(!pagina.isR() && !pagina.isW()) {
-				System.out.println("Tipo 0 encontrado");
 				return i;
 			}
 		}
@@ -124,7 +127,6 @@ public class AlgoritmoNRU {
 		for(int i = 0; i < numFrames; i++) {
 			Pagina pagina = listPaginas.get(i);
 			if(!pagina.isR() && pagina.isW()) {
-				System.out.println("Tipo 1 encontrado");
 				return i;
 			}
 		}
@@ -132,7 +134,6 @@ public class AlgoritmoNRU {
 		for(int i = 0; i < numFrames; i++) {
 			Pagina pagina = listPaginas.get(i);
 			if(pagina.isR() && !pagina.isW()) {
-				System.out.println("Tipo 2 encontrado");
 				return i;
 			}
 		}
@@ -140,7 +141,6 @@ public class AlgoritmoNRU {
 		for(int i = 0; i < numFrames; i++) {
 			Pagina pagina = listPaginas.get(i);
 			if(pagina.isR() && pagina.isW()) {
-				System.out.println("Tipo 3 encontrado");
 				return i;
 			}
 		}
@@ -161,7 +161,6 @@ public class AlgoritmoNRU {
 				listPaginas.get(i).setR(false);
 			}
 			clockTick = 0;
-			System.out.println("Limpei");
 		}
 	}
 }
