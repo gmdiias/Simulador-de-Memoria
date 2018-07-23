@@ -29,8 +29,16 @@ public class AlgoritmoNRU {
 	public void gerenciadorNRU() {
 		inicializaList();
 		lerArquivo();
-		System.out.println("Numero de Page Faults: " + contPF);
-		System.out.println("Numero de writes: " +modificado);
+		System.out.println("-----------------------------------------------");
+		System.out.println("* Execução terminada ...");
+		System.out.println("-----------------------------------------------");
+		System.out.println("Dados da ultima execução:");
+		System.out.println("Algoritmo utilizado: NRU");
+		System.out.println("Número de Page Faults: " + contPF);
+		System.out.println("Número de writes: " + modificado);
+		System.out.println("Parametros utilizados durante esta execução:");
+		System.out.println("Numero de Frames: " + numFrames + " Tamanho da página: " + tamPagina + " Arquivo: " + caminhoArquivo);
+		System.out.print("-----------------------------------------------");
 	}
 	
 	public void lerArquivo() {

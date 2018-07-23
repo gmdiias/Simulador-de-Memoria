@@ -4,9 +4,11 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Scanner leitor = new Scanner(System.in);
+		System.out.println("-----------------------------------------------");
 		System.out.println("Simulador de Memória Virtual");
+		System.out.println("-----------------------------------------------");
 		System.out.println("Para iniciar é necessário configurar alguns parametros ...");
-		System.out.print("Qual arquivo deseja executar ?? ");
+		System.out.print("Qual o caminho do arquivo que deseja executar ?? ");
 		String caminhoArquivo = leitor.nextLine();
 		System.out.print("Qual a quantidade de Frames desejada ?? ");
 		int numFrames = leitor.nextInt();
